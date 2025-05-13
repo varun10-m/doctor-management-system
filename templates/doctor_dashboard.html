@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #333;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-grant {
+            background-color: #28a745;
+        }
+
+        .btn-grant:hover {
+            background-color: #218838;
+        }
+
+        .btn-reject {
+            background-color: #dc3545;
+        }
+
+        .btn-reject:hover {
+            background-color: #a71d2a;
+        }
+
+        .logout {
+            margin-top: 20px;
+        }
+
+        .logout a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #dc3545;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .logout a:hover {
+            background: #a71d2a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, Dr. {{ doctor_username }}</h1>
+    </header>
+    <div>
+        <h2>Appointments</h2>
+        {% if appointments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment['patient_name'] }}</td>
+                            <td>{{ appointment['date'] }}</td>
+                            <td>{{ appointment['time'] }}</td>
+                            <td>{{ appointment['description'] }}</td>
+                            <td>
+                                {% if appointment['status'] == 'Pending' %}
+                                    <form action="/grant_appointment/{{ appointment['id'] }}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-grant">Grant</button>
+                                    </form>
+                                    <form action="/reject_appointment/{{ appointment['id'] }}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-reject">Reject</button>
+                                    </form>
+                                {% else %}
+                                    <span>{{ appointment['status'] }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No appointments found.</p>
+        {% endif %}
+    </div>
+    <div class="logout">
+        <a href="/doctor_logout">Logout</a>
+    </div>
+</body>
+</html>

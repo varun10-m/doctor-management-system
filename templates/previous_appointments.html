@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Previous Appointments</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Previous Appointments</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <div class="container">
+    {% if appointments %}
+      <table>
+        <thead>
+          <tr>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments %}
+            <tr>
+              <td>{{ appointment['doctor_name'] }}</td>
+              <td>{{ appointment['date'] }}</td>
+              <td>{{ appointment['time'] }}</td>
+              <td>{{ appointment['description'] }}</td>
+              <td>{{ appointment['status'] }}</td>
+              <td>
+                <form action="/delete_appointment/{{ appointment['id'] }}" method="POST" style="display:inline;">
+                  <button type="submit" class="btn btn-delete">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No previous appointments found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

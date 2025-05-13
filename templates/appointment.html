@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Appointment</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/appointment.css"> <!-- Added new CSS file -->
+</head>
+<body>
+  <header>
+    <h1>Book Appointment</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/appointment">Book Appointment</a>
+    </nav>
+  </header>
+  <div class="dialog-box">
+    <form action="/submit_appointment" method="POST">
+      <label for="name">Full Name:</label>
+      <input type="text" name="name" required>
+
+      <label for="doctor">Select Doctor:</label>
+      <select name="doctor" required>
+        <option value="1">Dr. Ayesha Khan</option>
+        <option value="2">Dr. Raj Mehta</option>
+      </select>
+
+      <label for="date">Date:</label>
+      <input type="date" name="date" required>
+
+      <label for="time">Time:</label>
+      <input type="time" name="time" required>
+
+      <label for="description">Description:</label>
+      <textarea name="description" rows="4" placeholder="Describe your problem or symptoms" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+    <form action="/previous_appointments" method="GET">
+      <button type="submit">Previous Appointments</button>
+    </form>
+  </div>
+</body>
+</html>
