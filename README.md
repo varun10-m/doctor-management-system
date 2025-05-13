@@ -94,10 +94,10 @@ doctor-management-system/
 ## Screenshots
 
 ### **Login Page**
-![Login Page](https://via.placeholder.com/800x400?text=Login+Page)
+![Login Page](static/images/Screenshot_2025-05-13_111702.png)
 
 ### **Appointment Booking**
-![Appointment Booking](https://via.placeholder.com/800x400?text=Appointment+Booking)
+![Appointment Booking](static/images/Screenshot_2025-05-13_111721.png)
 
 ---
 

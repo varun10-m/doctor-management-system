@@ -2,10 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_cors import CORS
 import mysql.connector
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Needed for sessions
 CORS(app)
+
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # MySQL Connection
 conn = mysql.connector.connect(
@@ -194,6 +198,20 @@ def reject_appointment(appointment_id):
 def doctor_logout():
     session.pop('doctor_username', None)
     return redirect('/doctor_login')
+
+# File Upload
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return 'No file part'
+        file = request.files['file']
+        if file.filename == '':
+            return 'No selected file'
+        if file:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+            return 'File uploaded successfully'
+    return render_template('upload.html')
 
 # Running the Flask app
 if __name__ == '__main__':
